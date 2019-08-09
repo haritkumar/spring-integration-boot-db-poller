@@ -29,9 +29,9 @@ public class DbPoller {
     }
 	
 	@Bean
-	@InboundChannelAdapter(value = "notificationChannel", poller = @Poller(fixedDelay="5000"))//5 Seconds
+	@InboundChannelAdapter(value = "notificationChannel", poller = @Poller(fixedDelay="10000"))//10 Seconds
 	public MessageSource<?> notificationPoller(DataSource dataSource) {
-		JdbcPollingChannelAdapter jdbcPollingChannelAdapter = new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM notification where processed = 'NO'");
+		JdbcPollingChannelAdapter jdbcPollingChannelAdapter = new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM notification where processed = 'NO' ORDER BY appear_time ASC LIMIT 2");
 		jdbcPollingChannelAdapter.setRowMapper(notificationRowMapper);
 		return jdbcPollingChannelAdapter;
 	}
