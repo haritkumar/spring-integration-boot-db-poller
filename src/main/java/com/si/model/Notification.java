@@ -61,8 +61,9 @@ public class Notification {
 		this.appearTime = appearTime;
 	}
 
-	public Notification(String notificationType, String message, Date appearTime, String processed) {
+	public Notification(Long id, String notificationType, String message, Date appearTime, String processed) {
 		super();
+		this.id = id;
 		this.notificationType = notificationType;
 		this.message = message;
 		this.appearTime = appearTime;

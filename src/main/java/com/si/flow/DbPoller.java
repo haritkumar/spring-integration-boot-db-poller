@@ -20,6 +20,9 @@ public class DbPoller {
 	@Autowired
 	NotificationMessageHandler notificationMessageHandler;
 	
+	@Autowired
+	NotificationRowMapper notificationRowMapper;
+	
 	@Bean
     public MessageChannel notificationChannel() {
         return new DirectChannel();
@@ -28,7 +31,9 @@ public class DbPoller {
 	@Bean
 	@InboundChannelAdapter(value = "notificationChannel", poller = @Poller(fixedDelay="5000"))//5 Seconds
 	public MessageSource<?> notificationPoller(DataSource dataSource) {
-	    return new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM notification where processed = 'NO'");
+		JdbcPollingChannelAdapter jdbcPollingChannelAdapter = new JdbcPollingChannelAdapter(dataSource, "SELECT * FROM notification where processed = 'NO'");
+		jdbcPollingChannelAdapter.setRowMapper(notificationRowMapper);
+		return jdbcPollingChannelAdapter;
 	}
 	
 	@Bean
