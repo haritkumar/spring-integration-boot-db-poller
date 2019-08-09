@@ -18,7 +18,7 @@ public class RestApi {
 	
 	@GetMapping("/ingest_notification")
 	public String ingestNotification(@RequestParam(required=true) NotificationType notificationType,@RequestParam(required=true) String message ) {
-		notificationRepository.save(new Notification(notificationType.name(), message, new Date()));
+		notificationRepository.save(new Notification(notificationType.name(), message, new Date(), "NO"));
 		return "Notification Marked";
 	}
 	

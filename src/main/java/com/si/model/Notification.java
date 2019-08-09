@@ -23,6 +23,9 @@ public class Notification {
 	@Column(name="message")
 	private String message;
 	
+	@Column(name="processed")
+	private String processed;
+	
 	@Column(name="appear_time")
 	private Date appearTime;
 
@@ -58,11 +61,20 @@ public class Notification {
 		this.appearTime = appearTime;
 	}
 
-	public Notification(String notificationType, String message, Date appearTime) {
+	public Notification(String notificationType, String message, Date appearTime, String processed) {
 		super();
 		this.notificationType = notificationType;
 		this.message = message;
 		this.appearTime = appearTime;
+		this.processed = processed;
+	}
+
+	public String getProcessed() {
+		return processed;
+	}
+
+	public void setProcessed(String processed) {
+		this.processed = processed;
 	}
 	
 	
