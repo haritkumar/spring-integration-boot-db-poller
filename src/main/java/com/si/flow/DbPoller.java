@@ -23,11 +23,13 @@ public class DbPoller {
 	@Autowired
 	NotificationRowMapper notificationRowMapper;
 	
+	//Channel 'notificationChannel'
 	@Bean
     public MessageChannel notificationChannel() {
         return new DirectChannel();
     }
 	
+	//InboundChannelAdapter (subscribe to notificationChannel and put messages to this channel)
 	@Bean
 	@InboundChannelAdapter(value = "notificationChannel", poller = @Poller(fixedDelay="10000"))//10 Seconds
 	public MessageSource<?> notificationPoller(DataSource dataSource) {
@@ -36,6 +38,7 @@ public class DbPoller {
 		return jdbcPollingChannelAdapter;
 	}
 	
+	//handling a message on notificationChannel
 	@Bean
     @ServiceActivator(inputChannel= "notificationChannel")
     public MessageHandler dbMessageHandler() {
